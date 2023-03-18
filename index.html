@@ -56,6 +56,8 @@
 			border: 1px solid #ccc;
 			padding: 0 10px;
 			text-align: center;
+			font-family: monospace;
+			font-size: large;
 		}
 		table td:nth-child(2n) {
 			border-right: 3px solid #ccc;
@@ -145,13 +147,21 @@
 		const alphabetView = document.querySelector('.alphabet-view');
 
 		const letterOrder = [
-			'Ď', 'Ť', 'Ň', 'Ó', 'Ú', 'Ů', 'Ý', 'É', 'Ě', 'Á', 'Í', 'Š', 'Č', 'Ž', 'Ř' , 'Ch', 'Q', 'W', 'X', 'G', 'F', 'H', 'B', 'C', 'Y', 'J', 'Z', 'U', 'M', 'P', 'D', 'R', 'K', 'L', 'I', 'S', 'V', 'T', 'A', 'N', 'E', 'O'
+			'Ď', 'Ť', 'Ň', 'Ó', 'Ú', 'Ů', 'Ý', 'É', 'Ě', 'Á', 'Í', 'Š', 'Č', 'Ž', 'Ř', 'Ch', 'Q', 'W', 'X', 'G', 'F', 'H', 'B', 'C', 'Y', 'J', 'Z', 'U', 'M', 'P', 'D', 'R', 'K', 'L', 'I', 'S', 'V', 'T', 'A', 'N', 'E', 'O'
 		].reverse();
+		const czechAlphabetLetters = [
+			'A', 'Á', 'B', 'C', 'Č', 'D', 'Ď', 'E', 'É', 'Ě', 'F', 'G', 'H', 'Ch', 'I', 'Í', 'J', 'K', 'L', 'M', 'N', 'Ň', 'O', 'Ó', 'P', 'Q', 'R', 'Ř', 'S', 'Š', 'T', 'Ť', 'U', 'Ú', 'Ů', 'V', 'W', 'X', 'Y', 'Ý', 'Z', 'Ž'
+		];
 
 		buttons.forEach(button => {
 			button.addEventListener('click', () => {
 				const lettersToTake = parseInt(button.getAttribute('data-value'), 10);
-				const alphabet = letterOrder.slice(0, lettersToTake).sort();
+				const alphabet = letterOrder.slice(0, lettersToTake).sort((a, b) => {
+					// Use czechAlphabetLetters to sort alphabet
+					return czechAlphabetLetters.indexOf(a) - czechAlphabetLetters.indexOf(b);
+				});
+
+
 				const alphabetTableCaption = alphabetView.querySelector('caption .table-caption-value');
 				const alphabetPart1 = alphabet.slice(0, Math.ceil(alphabet.length / 2));
 				const alphabetPart2 = alphabet.slice(Math.ceil(alphabet.length / 2), alphabet.length);
