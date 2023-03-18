@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My First Web Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: sans-serif;
+			background: #eee;
+		}
+		body > div {
+			display: none;
+			width: 100%;
+			height: 100vh;
+		}
+		.grid-5x9.active {
+			display: grid;
+			grid-template-columns: repeat(5, 1fr);
+			grid-template-rows: repeat(9, 1fr);
+			gap: 1px;
+		}
+		.grid-5x9 button {
+			background: #fff;
+			border: 1px solid #ccc;
+			padding: 10px;
+			font-size: 1.5em;
+			cursor: pointer;
+		}
+		.grid-5x9 button:hover {
+			background: #eee;
+		}
+		.alphabet-view.active {
+			display: grid;
+			grid-template-rows: auto minmax(70%, auto) auto;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			columns: 2;
+		}
+		table caption {
+			font-weight: bold;
+			text-align: center;
+			padding: 10px;
+		}
+		table th {
+			background: #eee;
+			border: 1px solid #ccc;
+			padding: 10px;
+		}
+		table td {
+			border: 1px solid #ccc;
+			padding: 0 10px;
+			text-align: center;
+		}
+		table td:nth-child(2n) {
+			border-right: 3px solid #ccc;
+		}
+		.back {
+			display: block;
+			margin: 0;
+			padding: 20px 5px;
+			background: #fff;
+			border: 1px solid #ccc;
+			cursor: pointer;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="grid-5x9 active">
+		<button data-value="1">1</button>
+		<button data-value="2">2</button>
+		<button data-value="3">3</button>
+		<button data-value="4">4</button>
+		<button data-value="5">5</button>
+		<button data-value="6">6</button>
+		<button data-value="7">7</button>
+		<button data-value="8">8</button>
+		<button data-value="9">9</button>
+		<button data-value="10">10</button>
+		<button data-value="11">11</button>
+		<button data-value="12">12</button>
+		<button data-value="13">13</button>
+		<button data-value="14">14</button>
+		<button data-value="15">15</button>
+		<button data-value="16">16</button>
+		<button data-value="17">17</button>
+		<button data-value="18">18</button>
+		<button data-value="19">19</button>
+		<button data-value="20">20</button>
+		<button data-value="21">21</button>
+		<button data-value="22">22</button>
+		<button data-value="23">23</button>
+		<button data-value="24">24</button>
+		<button data-value="25">25</button>
+		<button data-value="26">26</button>
+		<button data-value="27">27</button>
+		<button data-value="28">28</button>
+		<button data-value="29">29</button>
+		<button data-value="30">30</button>
+		<button data-value="31">31</button>
+		<button data-value="32">32</button>
+		<button data-value="33">33</button>
+		<button data-value="34">34</button>
+		<button data-value="35">35</button>
+		<button data-value="36">36</button>
+		<button data-value="37">37</button>
+		<button data-value="38">38</button>
+		<button data-value="39">39</button>
+		<button data-value="40">40</button>
+		<button data-value="41">41</button>
+		<button data-value="42">42</button>
+	</div>
+
+	<div class="alphabet-view">
+		<button class="back">ZPĚT NA VÝBĚR ABECED</button>
+		<table class="alphabet-table">
+			<caption>Abeceda <span class="table-caption-value"></span></caption>
+			<thead>
+				<tr>
+					<th>Číslo</th>
+					<th>Písmeno</th>
+					<th>Číslo</th>
+					<th>Písmeno</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+		</table>
+		<button class="back">ZPĚT NA VÝBĚR ABECED</button>
+	</div>
+
+	<script type="text/javascript">
+		const buttons = document.querySelectorAll('button');
+		const backButtons = document.querySelectorAll('.back');
+
+		const gridView = document.querySelector('.grid-5x9');
+		const alphabetView = document.querySelector('.alphabet-view');
+
+		const letterOrder = [
+			'Ď', 'Ť', 'Ň', 'Ó', 'Ú', 'Ů', 'Ý', 'É', 'Ě', 'Á', 'Í', 'Š', 'Č', 'Ž', 'Ř' , 'Ch', 'Q', 'W', 'X', 'G', 'F', 'H', 'B', 'C', 'Y', 'J', 'Z', 'U', 'M', 'P', 'D', 'R', 'K', 'L', 'I', 'S', 'V', 'T', 'A', 'N', 'E', 'O'
+		].reverse();
+
+		buttons.forEach(button => {
+			button.addEventListener('click', () => {
+				const lettersToTake = parseInt(button.getAttribute('data-value'), 10);
+				const alphabet = letterOrder.slice(0, lettersToTake).sort();
+				const alphabetTableCaption = alphabetView.querySelector('caption .table-caption-value');
+				const alphabetPart1 = alphabet.slice(0, Math.ceil(alphabet.length / 2));
+				const alphabetPart2 = alphabet.slice(Math.ceil(alphabet.length / 2), alphabet.length);
+
+				alphabetPart1.forEach((letter, index) => {
+					const row = document.createElement('tr');
+					const numberCell = document.createElement('td');
+					const letterCell = document.createElement('td');
+					const numberCell2 = document.createElement('td');
+					const letterCell2 = document.createElement('td');
+
+					numberCell.innerHTML = alphabet.indexOf(letter) + 1;
+					letterCell.innerHTML = letter;
+
+					if (alphabetPart2[index]) {
+						numberCell2.innerHTML = alphabet.indexOf(alphabetPart2[index]) + 1;
+						letterCell2.innerHTML = alphabetPart2[index];
+					}
+
+					row.appendChild(numberCell);
+					row.appendChild(letterCell);
+					row.appendChild(numberCell2);
+					row.appendChild(letterCell2);
+
+					alphabetView.querySelector('tbody').appendChild(row);
+				});
+
+				alphabetTableCaption.innerHTML = lettersToTake;
+
+				gridView.classList.remove('active');
+				alphabetView.classList.add('active');
+			});
+		});
+
+		backButtons.forEach(button => {
+			button.addEventListener('click', () => {
+				alphabetView.querySelector('tbody').innerHTML = '';
+				alphabetView.classList.remove('active');
+				document.querySelector('.grid-5x9').classList.add('active');
+			});
+		});
+	</script>
+</body>
+
+</html>
